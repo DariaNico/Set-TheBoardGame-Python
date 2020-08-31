@@ -1,3 +1,9 @@
+# Requirements to Run This Game
+Python Version: 3.7.3
+Pip Version: 20.2.2
+
+run `pip install -r requirements.txt` to install the necessary packages
+
 # SetAssignment
 Things we will need to do:
 
