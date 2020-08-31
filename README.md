@@ -23,3 +23,9 @@ We will play each other's games and provide feedback
 =======
 # Intro-to-Game-Dev-Set-in-Python
 Coding up our take on the Set board game in Python
+
+# Class Github Organization
+https://github.com/UICS-Game-Dev
+
+# Professor Szecei Github Account
+https://github.com/szecsei
