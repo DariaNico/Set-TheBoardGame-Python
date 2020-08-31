@@ -20,3 +20,6 @@ For Topics II students: the expectation is that a basic game can be played, and 
 You should be able to explain your decisions regarding game mechanics.  What process did you use to display your cards? What process did you use to determine if the 3 cards form a set? 
 
 We will play each other's games and provide feedback
+=======
+# Intro-to-Game-Dev-Set-in-Python
+Coding up our take on the Set board game in Python
