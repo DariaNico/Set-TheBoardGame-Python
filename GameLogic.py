@@ -1,4 +1,3 @@
-from functools import reduce
 import Card
 import Deck
 
@@ -19,11 +18,15 @@ class GameLogic:
 
     @staticmethod
     def is_match(selected_attrs):
-        reduce((lambda x, y: x == y), selected_attrs)
+        previous_attr = selected_attrs[0]
+        for attr in selected_attrs:
+            if previous_attr != attr:
+                return False
+        return True
 
     @staticmethod
     def is_set(selected_attrs):
-        len(set(selected_attrs)) == 3
+        return len(set(selected_attrs)) == 3
 
     def evaluate_selected_colors(self):
         selected_colors = list(map(lambda card: card.getColor(), self.selected))
@@ -42,9 +45,13 @@ class GameLogic:
         return { 'match': self.is_match(selected_shapes), 'set': self.is_set(selected_shapes) }
 
     def is_a_card_set(self):
-        evaluated_selected_attrs = { 'color': self.evaluate_selected_colors, 'fill': self.evaluate_selected_fills, 'number': self.evaluate_selected_numbers, 'shape': self.evaluate_selected_shapes }
-        selected_match_bools = list(map(lambda x: x['match'], evaluated_selected_attrs.values()))
-        selected_set_bools = list(map(lambda x: x['set'], evaluated_selected_attrs.values()))
+        evaluated_selected_attrs = { 'color': self.evaluate_selected_colors(), 'fill': self.evaluate_selected_fills(), 'number': self.evaluate_selected_numbers(), 'shape': self.evaluate_selected_shapes() }
+        selected_match_bools = []
+        selected_set_bools = []
+
+        for selected_attr_bools in evaluated_selected_attrs.values():
+            selected_match_bools.append(selected_attr_bools['match'])
+            selected_set_bools.append(selected_attr_bools['set'])
 
         # TODO ? Add in the logic for if nothing matches?
         if selected_match_bools.count(True) == 3 and selected_set_bools.count(True) == 1:
