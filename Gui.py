@@ -19,7 +19,7 @@ class Gui:
     def place_cards_on_board(self, cards, num_rows, num_columns):
         
         num_cards = len(cards)
-        if(num_cards!= 12 and num_cards!= 15):
+        if(num_cards != 12 and num_cards != 15):
             raise Exception(f"Must place 12 or 15 cards. Placed {num_cards} cards.")
         
         self.define_board(num_cards, num_rows, num_columns)
