@@ -14,9 +14,13 @@ window = tk.Tk()
 
 # Adds cards to play board.
 # Parameter: List of 12 or 15 cards.
-def place_cards_on_board(cards):
-    if(len(cards)!= 12 and len(cards)!= 15):
+def place_cards_on_board(cards, num_rows, num_columns):
+    
+    num_cards = len(cards)
+    if(num_cards!= 12 and num_cards!= 15):
         raise Exception(f"Must place 12 or 15 cards. Placed {len(cards)} cards.")
+    
+    define_board(num_cards, num_rows, num_columns)
     
     global mCards 
     mCards = cards
@@ -87,11 +91,10 @@ def start_game():
 # For testing during development 
 #TODO remove or make a separate test file when ready
 def self_test(num_cards, num_rows, num_columns):
-    define_board(num_cards, num_rows, num_columns)
     deck = Deck()
     deck.shuffle()
     cards = []
     for i in range(0,mNum_cards):
         cards.append(deck.getCard(i))
         print(f"{i}: {cards[i].getColor()}")
-    place_cards_on_board(cards)
+    place_cards_on_board(cards, num_rows, num_columns)
