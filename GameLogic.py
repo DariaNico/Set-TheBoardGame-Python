@@ -15,6 +15,7 @@ class GameLogic:
         # TODO: Need to have GUI to finish this logic
         self.accruedSets = []
         self.selected = []
+        # TODO: Define play logic
 
     @staticmethod
     def isMatch(selectedAttrs):
@@ -45,7 +46,22 @@ class GameLogic:
         selectedMatchBools = list(map(lambda x: x['match'], evaluatedSelectedAttrs.values()))
         selectedSetBools = list(map(lambda x: x['set'], evaluatedSelectedAttrs.values()))
 
+        # TODO ? Add in the logic for if nothing matches?
         if selectedMatchBools.count(True) == 3 and selectedSetBools.count(True) == 1:
             return True
         else:
             return False
+
+    # TODO add play logic
+    # Pseudo: when selected length == 3, immediately check set validity
+    #   If is valid card set, add to accruedSets as a tuple and refil the board. Show and alert of success
+    #   Else empty out selected and deselect in gui. show an alert of failure
+
+    # Provide a reset board button
+    # Will probably not need a discard
+    # What are the win/lose conditions?
+    #   Win: TODO
+    #   Lose: TODO
+    # End game conditions?
+    #   Add a I'm done button?
+    # TODO: Add a number of possible sets left logic?
