@@ -7,11 +7,11 @@ Deck = Deck.Deck
 
 class Gui:
     def __init__(self):
-        self.mCards = []
+        self.cards = []
         self.buttons = []
-        self.mNum_rows = 3
-        self.mNum_columns = 4
-        self.mNum_cards = 12
+        self.num_rows = 3
+        self.num_columns = 4
+        self.num_cards = 12
         self.window = tk.Tk()
 
     # Adds cards to play board.
@@ -24,7 +24,7 @@ class Gui:
         
         self.define_board(num_cards, num_rows, num_columns)
         
-        self.mCards = cards
+        self.cards = cards
         self.create_buttons()
         self.start_game()
 
@@ -36,20 +36,20 @@ class Gui:
         
     # Configure number of cards, rows, and columns the board will contain.
     def define_board(self, num_cards, num_rows, num_columns):
-        self.mNum_cards = num_cards
-        self.mNum_rows = num_rows
-        self.mNum_columns = num_columns
+        self.num_cards = num_cards
+        self.num_rows = num_rows
+        self.num_columns = num_columns
         
     def create_buttons(self):
         # Adding the buttons in a loop in the way below results in all the lambda events to recieve the last index
-        # for i in range(0,mNum_cards):
+        # for i in range(0,num_cards):
         #     buttonId = i
         #     button = tk.Button(window, text = f"test button {i}", command = lambda: thanks(i))
         #     buttons.append(button)
 
         # So I need to do it manually for now
         window = self.window
-        cards = self.mCards
+        cards = self.cards
         self.buttons = [
             tk.Button(window, text = cards[0].color, command = lambda: self.selected(0)),
             tk.Button(window, text = cards[1].color, command = lambda: self.selected(1)),
@@ -64,7 +64,7 @@ class Gui:
             tk.Button(window, text = cards[10].color, command = lambda: self.selected(10)),
             tk.Button(window, text = cards[11].color, command = lambda: self.selected(11))
         ]
-        if (self.mNum_cards == 15):
+        if (self.num_cards == 15):
             self.buttons.append(tk.Button(window, text = cards[12].color, command = lambda: self.selected(12)))
             self.buttons.append(tk.Button(window, text = cards[13].color, command = lambda: self.selected(13)))
             self.buttons.append(tk.Button(window, text = cards[14].color, command = lambda: self.selected(14)))
@@ -75,14 +75,14 @@ class Gui:
         self.window.title("GUI")
         label = tk.Label(self.window, text = "First window")
         label.grid(row=0, column=0)
-        self.create_grid(self.buttons, self.mCards)
+        self.create_grid(self.buttons, self.cards)
 
         self.window.mainloop()
         
     def create_grid(self,buttons, cards):
-        for i in range(0,self.mNum_cards):
-            row = int(i/self.mNum_columns)+1
-            column = int(i%self.mNum_columns)
+        for i in range(0,self.num_cards):
+            row = int(i/self.num_columns)+1
+            column = int(i%self.num_columns)
             self.buttons[i].grid(row = row, column = column)
 
     # For testing during development 
