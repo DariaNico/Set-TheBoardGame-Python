@@ -7,54 +7,54 @@ Deck = Deck.Deck
 
 class GameLogic:
     def __init__(self):
-        self.playDeck = Deck()
-        self.discardPile = []
-        # TODO: Get this hooked up with the GUI
-        self.playGrid = []
+        self.play_deck = Deck()
+        self.discard_pile = []
+        # TOdO: Get this hooked up with the GUI
+        self.play_grid = []
 
         # TODO: Need to have GUI to finish this logic
-        self.accruedSets = []
+        self.accrued_sets = []
         self.selected = []
         # TODO: Define play logic
 
     @staticmethod
-    def isMatch(selectedAttrs):
-        reduce((lambda x, y: x == y), selectedAttrs)
+    def is_match(selected_attrs):
+        reduce((lambda x, y: x == y), selected_attrs)
 
     @staticmethod
-    def isSet(selectedAttrs):
-        len(set(selectedAttrs)) == 3
+    def is_set(selected_attrs):
+        len(set(selected_attrs)) == 3
 
-    def evaluateSelectedColors(self):
-        selectedColors = list(map(lambda card: card.getColor(), self.selected))
-        return { 'match': self.isMatch(selectedColors), 'set': self.isSet(selectedColors) }
+    def evaluate_selected_colors(self):
+        selected_colors = list(map(lambda card: card.getColor(), self.selected))
+        return { 'match': self.is_match(selected_colors), 'set': self.is_set(selected_colors) }
 
-    def evaluateSelectedFills(self):
-        selectedFills = list(map(lambda card: card.getFill(), self.selected))
-        return { 'match': self.isMatch(selectedFills), 'set': self.isSet(selectedFills) }
+    def evaluate_selected_fills(self):
+        selected_fills = list(map(lambda card: card.getFill(), self.selected))
+        return { 'match': self.is_match(selected_fills), 'set': self.is_set(selected_fills) }
 
-    def evaluateSelectedNumbers(self):
-        selectedNumbers = list(map(lambda card: card.getNumber(), self.selected))
-        return { 'match': self.isMatch(selectedNumbers), 'set': self.isSet(selectedNumbers) }
+    def evaluate_selected_numbers(self):
+        selected_numbers = list(map(lambda card: card.getNumber(), self.selected))
+        return { 'match': self.is_match(selected_numbers), 'set': self.is_set(selected_numbers) }
 
-    def evaluateSelectedShapes(self):
-        selectedShapes = list(map(lambda card: card.getShape(), self.selected))
-        return { 'match': self.isMatch(selectedShapes), 'set': self.isSet(selectedShapes) }
+    def evaluate_selected_shapes(self):
+        selected_shapes = list(map(lambda card: card.getShape(), self.selected))
+        return { 'match': self.is_match(selected_shapes), 'set': self.is_set(selected_shapes) }
 
-    def isACardSet(self):
-        evaluatedSelectedAttrs = { 'color': self.evaluateSelectedColors, 'fill': self.evaluateSelectedFills, 'number': self.evaluateSelectedNumbers, 'shape': self.evaluateSelectedShapes }
-        selectedMatchBools = list(map(lambda x: x['match'], evaluatedSelectedAttrs.values()))
-        selectedSetBools = list(map(lambda x: x['set'], evaluatedSelectedAttrs.values()))
+    def is_a_card_set(self):
+        evaluated_selected_attrs = { 'color': self.evaluate_selected_colors, 'fill': self.evaluate_selected_fills, 'number': self.evaluate_selected_numbers, 'shape': self.evaluate_selected_shapes }
+        selected_match_bools = list(map(lambda x: x['match'], evaluated_selected_attrs.values()))
+        selected_set_bools = list(map(lambda x: x['set'], evaluated_selected_attrs.values()))
 
         # TODO ? Add in the logic for if nothing matches?
-        if selectedMatchBools.count(True) == 3 and selectedSetBools.count(True) == 1:
+        if selected_match_bools.count(True) == 3 and selected_set_bools.count(True) == 1:
             return True
         else:
             return False
 
     # TODO add play logic
     # Pseudo: when selected length == 3, immediately check set validity
-    #   If is valid card set, add to accruedSets as a tuple and refil the board. Show and alert of success
+    #   If is valid card set, add to accrued_sets as a tuple and refil the board. Show and alert of success
     #   Else empty out selected and deselect in gui. show an alert of failure
 
     # Provide a reset board button
