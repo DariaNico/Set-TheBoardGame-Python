@@ -14,7 +14,7 @@ class Deck:
             for fill in self.fillList:
                 for shape in self.shapeList:
                     for number in self.numList:
-                        self.cardList.append(Card(color, fill, shape, number))
+                        self.cardList.append(Card(color, shape, fill, number))
 
     def getNumberOfCards(self):
         return len(self.cardList)
