@@ -7,13 +7,19 @@ Deck = Deck.Deck
 
 mCards = []
 buttons = []
+mNum_rows = 3
+mNum_columns = 4
+mNum_cards = 12
+window = tk.Tk()
 
 # Adds cards to play board.
-# Parameter: List of 9 cards.
+# Parameter: List of 12 or 15 cards.
 def place_cards_on_board(cards):
+    if(len(cards)!= 12 and len(cards)!= 15):
+        raise Exception(f"Must place 12 or 15 cards. Placed {len(cards)} cards.")
     global mCards 
     mCards = cards
-    
+    create_buttons()
     start_game()
 
 # Performs GUI reaction to one of the cards being selected and fires method to inform game 
@@ -22,30 +28,16 @@ def place_cards_on_board(cards):
 def selected(buttonId):
     buttons[buttonId]['text'] = "selected"
     
-def create_grid(buttons, cards):
-    for i in range(0,9):
-        buttons[i].grid(row = int(i/3)+1, column = int(i%3))
+# Configure number of cards, rows, and columns the board will contain.
+def define_board(num_cards, num_rows, num_columns):
+    mNum_cards = num_cards
+    mNum_rows = num_rows
+    mNum_columns = num_columns
     
-def start_game():
+def create_buttons():
     global buttons
-    
-    #Configure window and label
-    window = tk.Tk()
-    window.title("GUI")
-    label = tk.Label(window, text = "First window")
-    label.grid(row=0, column=0)
-    
-    #Below is for manually entering cards for testing. #TODO remove when ready
-    # deck = Deck()
-    # deck.shuffle()
-    # cards = []
-    # for i in range(0,9):
-    #     cards.append(deck.getCard(i))
-    #     print(cards[i].getColor())
-    # place_cards_on_board(cards)
-
     # Adding the buttons in a loop in the way below results in all the lambda events to recieve the last index
-    # for i in range(0,9):
+    # for i in range(0,mNum_cards):
     #     buttonId = i
     #     button = tk.Button(window, text = f"test button {i}", command = lambda: thanks(i))
     #     buttons.append(button)
@@ -60,9 +52,42 @@ def start_game():
         tk.Button(window, text = mCards[5].color, command = lambda: selected(5)),
         tk.Button(window, text = mCards[6].color, command = lambda: selected(6)),
         tk.Button(window, text = mCards[7].color, command = lambda: selected(7)),
-        tk.Button(window, text = mCards[8].color, command = lambda: selected(8))
+        tk.Button(window, text = mCards[8].color, command = lambda: selected(8)),
+        tk.Button(window, text = mCards[9].color, command = lambda: selected(9)),
+        tk.Button(window, text = mCards[10].color, command = lambda: selected(10)),
+        tk.Button(window, text = mCards[11].color, command = lambda: selected(11))
     ]
+    if (mNum_cards == 15):
+        buttons.append(tk.Button(window, text = mCards[11].color, command = lambda: selected(11)))
+        buttons.append(tk.Button(window, text = mCards[12].color, command = lambda: selected(12)))
+        buttons.append(tk.Button(window, text = mCards[13].color, command = lambda: selected(13)))
+        buttons.append(tk.Button(window, text = mCards[14].color, command = lambda: selected(14)))
+    
+    
+def create_grid(buttons, cards):
+    for i in range(0,mNum_cards):
+        row = int(i/mNum_columns)+1
+        column = int(i%mNum_columns)
+        buttons[i].grid(row = row, column = column)
+    
+def start_game():
+    global buttons
+    
+    #Configure window and label
+    window.title("GUI")
+    label = tk.Label(window, text = "First window")
+    label.grid(row=0, column=0)
+    
+    #Below is for manually entering cards for testing. #TODO remove when ready
+    # deck = Deck()
+    # deck.shuffle()
+    # cards = []
+    # for i in range(0,mNum_cards):
+    #     cards.append(deck.getCard(i))
+    #     print(f"{i}: {cards[i].getColor()}")
+    # place_cards_on_board(cards)
 
     create_grid(buttons, mCards)
 
     window.mainloop()
+    
