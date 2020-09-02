@@ -39,3 +39,13 @@ class GameLogic:
     def evaluateSelectedShapes(self):
         selectedShapes = list(map(lambda card: card.getShape(), self.selected))
         return { 'match': self.isMatch(selectedShapes), 'set': self.isSet(selectedShapes) }
+
+    def isACardSet(self):
+        evaluatedSelectedAttrs = { 'color': self.evaluateSelectedColors, 'fill': self.evaluateSelectedFills, 'number': self.evaluateSelectedNumbers, 'shape': self.evaluateSelectedShapes }
+        selectedMatchBools = list(map(lambda x: x['match'], evaluatedSelectedAttrs.values()))
+        selectedSetBools = list(map(lambda x: x['set'], evaluatedSelectedAttrs.values()))
+
+        if selectedMatchBools.count(True) == 3 and selectedSetBools.count(True) == 1:
+            return True
+        else:
+            return False
