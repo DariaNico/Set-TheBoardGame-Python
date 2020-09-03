@@ -88,8 +88,10 @@ class GameLogic:
         if len(self.selected) == 3:
             if self.is_a_card_set():
                 self.set_success()
+                print("SUCCESS")
             else:
                 self.set_failure()
+                print("FAILURE")
     # TODO add play logic
     # Pseudo: when selected length == 3, immediately check set validity
     #   If is valid card set, add to successful_set_pile as a tuple and refil the board. Show and alert of success

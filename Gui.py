@@ -43,9 +43,8 @@ class Gui:
             print(self.game_logic.selected[i].color)
             
         if len(self.game_logic.selected) == 3:
-            if self.game_logic.is_a_card_set():
-                print("YOU WIN")
-            
+                self.game_logic.check_selected_cards()
+                self.next_game()
         
     # Configure number of cards, rows, and columns the board will contain.
     def define_board(self, num_cards, num_rows, num_columns):
@@ -86,13 +85,18 @@ class Gui:
             self.buttons.append(tk.Button(window, image = images[14], command = lambda: self.selected(14)))
         for i in range(0,self.num_cards):
             self.buttons[i].image = images[i]
+            
+    def next_game(self):
+        for button in self.buttons:
+            button.grid_forget()
+        self.place_cards_on_board(self.game_logic.cards_in_play, 3, 4)
+        self.create_grid(self.buttons, self.cards)
         
     def start_game(self):
         
         #Configure window and label
-        
-        drawn_cards = self.game_logic.draw_cards(12)
-        self.place_cards_on_board(drawn_cards, 3, 4)
+        self.game_logic.start_game(12)
+        self.place_cards_on_board(self.game_logic.cards_in_play, 3, 4)
         self.window.title("GUI")
         label = tk.Label(self.window, text = "First window")
         label.grid(row=0, column=0)
