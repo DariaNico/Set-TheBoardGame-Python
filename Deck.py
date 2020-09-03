@@ -14,7 +14,7 @@ class Deck:
             for fill in self.fillList:
                 for shape in self.shapeList:
                     for number in self.numList:
-                        self.cardList.append(Card(color, fill, shape, number))
+                        self.cardList.append(Card(color, shape, fill, number))
 
     def getNumberOfCards(self):
         return len(self.cardList)
@@ -22,6 +22,9 @@ class Deck:
     #takes in an integer (1-81) and returns the index at that card
     def getCard(self, CardNumber):
         return self.cardList[CardNumber]
+    
+    def draw(self):
+        return self.cardList.pop()
 
     #shuffle method with three shuffles
     def shuffle(self):
