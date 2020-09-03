@@ -55,7 +55,7 @@ class GameLogic:
             selected_set_bools.append(selected_attr_bools['set'])
 
         # TODO ? Add in the logic for if nothing matches?
-        if selected_match_bools.count(True) == 3 and selected_set_bools.count(True) == 1:
+        if selected_match_bools.count(True) + selected_set_bools.count(True) == 4:
             return True
         else:
             return False
