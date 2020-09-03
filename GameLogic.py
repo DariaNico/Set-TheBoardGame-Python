@@ -8,14 +8,13 @@ class GameLogic:
     def __init__(self):
         self.play_deck = Deck()
         self.play_deck.shuffle()
-        self.discard_pile = []
-        # TOdO: Get this hooked up with the GUI
-        self.play_grid = []
 
-        # TODO: Need to have GUI to finish this logic
-        self.accrued_sets = []
+        self.cards_in_play = []
         self.selected = []
-        # TODO: Define play logic
+
+        self.successful_set_pile = []
+        # NOTE: keep for stats and fail count
+        self.failed_set_pile = []
 
     @staticmethod
     def is_match(selected_attrs):
@@ -54,7 +53,6 @@ class GameLogic:
             selected_match_bools.append(selected_attr_bools['match'])
             selected_set_bools.append(selected_attr_bools['set'])
 
-        # TODO ? Add in the logic for if nothing matches?
         if selected_match_bools.count(True) + selected_set_bools.count(True) == 4:
             return True
         else:
@@ -67,9 +65,34 @@ class GameLogic:
 
         return drawn_cards
 
+    def start_game(self, draw_number):
+        self.cards_in_play = self.draw_cards(draw_number)
+
+    def replace_cards(self):
+        drawn_cards = self.draw_cards(len(self.selected))
+        
+        for removed_card in self.selected:
+            i = self.cards_in_play.index(removed_card)
+            self.cards_in_play[i] = drawn_cards.pop()
+
+    def set_success(self):
+        self.successful_set_pile.append(self.selected)
+        self.replace_cards()
+        self.selected.clear()
+
+    def set_failure(self):
+        self.failed_set_pile.append(self.selected)
+        self.selected.clear()
+
+    def check_selected_cards(self):
+        if len(self.selected) == 3:
+            if self.is_a_card_set():
+                self.set_success()
+            else:
+                self.set_failure()
     # TODO add play logic
     # Pseudo: when selected length == 3, immediately check set validity
-    #   If is valid card set, add to accrued_sets as a tuple and refil the board. Show and alert of success
+    #   If is valid card set, add to successful_set_pile as a tuple and refil the board. Show and alert of success
     #   Else empty out selected and deselect in gui. show an alert of failure
 
     # Provide a reset board button
