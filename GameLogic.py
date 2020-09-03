@@ -7,6 +7,7 @@ Deck = Deck.Deck
 class GameLogic:
     def __init__(self):
         self.play_deck = Deck()
+        self.play_deck.shuffle()
         self.discard_pile = []
         # TOdO: Get this hooked up with the GUI
         self.play_grid = []
@@ -58,6 +59,13 @@ class GameLogic:
             return True
         else:
             return False
+
+    def draw_cards(self, draw_number):
+        drawn_cards = []
+        for i in range(0, draw_number):
+            drawn_cards.append(self.play_deck.draw())
+
+        return drawn_cards
 
     # TODO add play logic
     # Pseudo: when selected length == 3, immediately check set validity
