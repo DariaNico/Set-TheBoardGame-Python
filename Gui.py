@@ -2,6 +2,7 @@ import tkinter as tk
 import Card
 import Deck
 import GameLogic
+from tkinter import PhotoImage
 
 GameLogic = GameLogic.GameLogic
 Card = Card.Card
@@ -62,24 +63,29 @@ class Gui:
         # So I need to do it manually for now
         window = self.window
         cards = self.cards
+        images = []
+        for i in range(0,self.num_cards):
+            images.append(PhotoImage(file = f"C:/Users/wgold/Documents/Intro-to-Game-Dev-Set-in-Python/CardImages/{cards[i].color} {cards[i].fill} {cards[i].shape}{cards[i].number}.gif"))
         self.buttons = [
-            tk.Button(window, text = f"{cards[0].color}\n{cards[0].fill}\n{cards[0].shape}\n{cards[0].number}", command = lambda: self.selected(0)),
-            tk.Button(window, text = f"{cards[1].color}\n{cards[1].fill}\n{cards[1].shape}\n{cards[1].number}", command = lambda: self.selected(1)),
-            tk.Button(window, text = f"{cards[2].color}\n{cards[2].fill}\n{cards[2].shape}\n{cards[2].number}", command = lambda: self.selected(2)),
-            tk.Button(window, text = f"{cards[3].color}\n{cards[3].fill}\n{cards[3].shape}\n{cards[3].number}", command = lambda: self.selected(3)),
-            tk.Button(window, text = f"{cards[4].color}\n{cards[4].fill}\n{cards[4].shape}\n{cards[4].number}", command = lambda: self.selected(4)),
-            tk.Button(window, text = f"{cards[5].color}\n{cards[5].fill}\n{cards[5].shape}\n{cards[5].number}", command = lambda: self.selected(5)),
-            tk.Button(window, text = f"{cards[6].color}\n{cards[6].fill}\n{cards[6].shape}\n{cards[6].number}", command = lambda: self.selected(6)),
-            tk.Button(window, text = f"{cards[7].color}\n{cards[7].fill}\n{cards[7].shape}\n{cards[7].number}", command = lambda: self.selected(7)),
-            tk.Button(window, text = f"{cards[8].color}\n{cards[8].fill}\n{cards[8].shape}\n{cards[8].number}", command = lambda: self.selected(8)),
-            tk.Button(window, text = f"{cards[9].color}\n{cards[9].fill}\n{cards[9].shape}\n{cards[9].number}", command = lambda: self.selected(9)),
-            tk.Button(window, text = f"{cards[10].color}\n{cards[10].fill}\n{cards[10].shape}\n{cards[10].number}", command = lambda: self.selected(10)),
-            tk.Button(window, text = f"{cards[11].color}\n{cards[11].fill}\n{cards[11].shape}\n{cards[11].number}", command = lambda: self.selected(11))
+            tk.Button(window, image = images[0], command = lambda: self.selected(0)),
+            tk.Button(window, image = images[1], command = lambda: self.selected(1)),
+            tk.Button(window, image = images[2], command = lambda: self.selected(2)),
+            tk.Button(window, image = images[3], command = lambda: self.selected(3)),
+            tk.Button(window, image = images[4], command = lambda: self.selected(4)),
+            tk.Button(window, image = images[5], command = lambda: self.selected(5)),
+            tk.Button(window, image = images[6], command = lambda: self.selected(6)),
+            tk.Button(window, image = images[7], command = lambda: self.selected(7)),
+            tk.Button(window, image = images[8], command = lambda: self.selected(8)),
+            tk.Button(window, image = images[9], command = lambda: self.selected(9)),
+            tk.Button(window, image = images[10], command = lambda: self.selected(10)),
+            tk.Button(window, image = images[11], command = lambda: self.selected(11))
         ]
         if (self.num_cards == 15):
-            self.buttons.append(tk.Button(window, text = f"{cards[12].color}\n{cards[12].fill}\n{cards[12].shape}\n{cards[12].number}", command = lambda: self.selected(12)))
-            self.buttons.append(tk.Button(window, text = f"{cards[13].color}\n{cards[13].fill}\n{cards[13].shape}\n{cards[13].number}", command = lambda: self.selected(13)))
-            self.buttons.append(tk.Button(window, text = f"{cards[14].color}\n{cards[14].fill}\n{cards[14].shape}\n{cards[14].number}", command = lambda: self.selected(14)))
+            self.buttons.append(tk.Button(window, image = images[12], command = lambda: self.selected(12)))
+            self.buttons.append(tk.Button(window, image = images[13], command = lambda: self.selected(13)))
+            self.buttons.append(tk.Button(window, image = images[14], command = lambda: self.selected(14)))
+        for i in range(0,self.num_cards):
+            self.buttons[i].image = images[i]
         
     def start_game(self):
         
