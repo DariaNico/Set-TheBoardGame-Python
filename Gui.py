@@ -16,7 +16,11 @@ class Gui:
         self.num_columns = 4
         self.num_cards = 12
         self.root = Tk()
-        self.root.title("The Truffle Oil Crew")
+        self.root.title("Best SET Game Ever By: The Truffle Oil Crew")
+        self.scoreboard_frame = Frame(self.root)
+        self.scoreboard_frame.pack(side =TOP)
+        self.score = Label(self.scoreboard_frame, text = "0")
+        self.score.pack(side = TOP)
         self.game_frame = Frame(self.root)
         self.game_frame.pack(side = TOP)
         self.control_frame = Frame(self.root)
@@ -55,7 +59,8 @@ class Gui:
             
         if len(self.game_logic.selected) == 3:
                 self.game_logic.check_selected_cards()
-                self.next_game()
+                self.score['text'] = len(self.game_logic.successful_set_pile)
+                self.next_board()
         
     # Configure number of cards, rows, and columns the board will contain.
     def define_board(self, num_cards, num_rows, num_columns):
@@ -97,7 +102,7 @@ class Gui:
         for i in range(0,self.num_cards):
             self.buttons[i].image = images[i]
             
-    def next_game(self):
+    def next_board(self):
         self.wipe_board()
         self.place_cards_on_board(self.game_logic.cards_in_play, 3, 4)
         self.create_grid(self.buttons, self.cards)
@@ -105,6 +110,7 @@ class Gui:
     def new_game(self):
         self.wipe_board()
         self.game_logic = GameLogic()
+        self.score['text'] = len(self.game_logic.successful_set_pile)
         self.start_game()
         
     def wipe_board(self):
@@ -116,8 +122,6 @@ class Gui:
         #Configure window and label
         self.game_logic.start_game(12)
         self.place_cards_on_board(self.game_logic.cards_in_play, 3, 4)
-        label = Label(self.game_frame, text = "The 31st best SET game ever created.")
-        label.grid(row=0, column=0)
         self.create_grid(self.buttons, self.cards)
 
         self.root.mainloop()
