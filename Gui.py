@@ -51,7 +51,12 @@ class Gui:
     def selected(self, button_id):
         button_text = self.buttons[button_id]['text']
         self.buttons[button_id]['text'] = f"{button_text} selected"
-        self.game_logic.selected.append(self.cards[button_id])
+        if (self.game_logic.cards_in_play[button_id] in self.game_logic.selected):
+            self.game_logic.selected.remove(self.game_logic.cards_in_play[button_id])
+            self.buttons[button_id]['bg'] = 'SystemButtonFace'
+        else: 
+            self.game_logic.selected.append(self.cards[button_id])
+            self.buttons[button_id]['bg'] = 'white'
         for i in range(0, len(self.game_logic.selected)):
             print(self.game_logic.selected[i].color)
             
