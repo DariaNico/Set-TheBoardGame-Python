@@ -28,12 +28,8 @@ class Gui:
     # Adds cards to play board.
     # Parameter: List of 12 or 15 cards.
     def place_cards_on_board(self, cards, num_rows, num_columns):
-        
         num_cards = len(cards)
-        if num_cards != 12 and num_cards != 15:
-            raise Exception(f"Must place 12 or 15 cards. Placed {num_cards} cards.")
         self.define_board(num_cards, num_rows, num_columns)
-        
         self.cards = cards
         self.create_buttons()
         
@@ -45,9 +41,6 @@ class Gui:
         new_game_button = Button(self.control_frame, text = "New Game", command = lambda: self.new_game())
         new_game_button.pack(side = RIGHT)
 
-    # Performs GUI reaction to one of the cards being selected and fires method to inform game 
-    # logic which item was chosen
-    # TODO call method in game logic, should be able to identify with buttonId which matches the index of the card
     def selected(self, button_id):
         button_text = self.buttons[button_id]['text']
         self.buttons[button_id]['text'] = f"{button_text} selected"
@@ -56,13 +49,12 @@ class Gui:
             self.buttons[button_id]['bg'] = 'SystemButtonFace'
         else: 
             self.game_logic.selected.append(self.cards[button_id])
-            self.buttons[button_id]['bg'] = 'white'
+            self.buttons[button_id]['bg'] = 'SkyBlue1'
         for i in range(0, len(self.game_logic.selected)):
             print(self.game_logic.selected[i].color)
             
         if len(self.game_logic.selected) == 3:
                 self.game_logic.check_selected_cards()
-                self.scoreboard_frame.add_point()
                 self.next_board()
         
     # Configure number of cards, rows, and columns the board will contain.
@@ -107,13 +99,14 @@ class Gui:
             
     def next_board(self):
         self.wipe_board()
+        self.scoreboard_frame.update_score(self.game_logic.get_score())
         self.place_cards_on_board(self.game_logic.cards_in_play, 3, 4)
         self.create_grid(self.buttons, self.cards)
         
     def new_game(self):
         self.wipe_board()
         self.game_logic = GameLogic()
-        self.scoreboard_frame.reset_score()
+        self.scoreboard_frame.update_score(self.game_logic.get_score())
         self.start_game()
         
     def wipe_board(self):
@@ -121,8 +114,6 @@ class Gui:
             button.grid_forget()
         
     def start_game(self):
-        
-        #Configure window and label
         self.game_logic.start_game(12)
         self.place_cards_on_board(self.game_logic.cards_in_play, 3, 4)
         self.create_grid(self.buttons, self.cards)
@@ -135,17 +126,6 @@ class Gui:
             column = int(i%self.num_columns)
             self.buttons[i].grid(row = row, column = column)
 
-    # For testing during development 
-    #TODO remove or make a separate test file when ready
-    def self_test(self, num_cards, num_rows, num_columns):
-        deck = Deck()
-        deck.shuffle()
-        cards = []
-        for i in range(0,num_cards):
-            cards.append(deck.getCard(i))
-            print(f"{i}: {cards[i].getColor()}")
-        self.place_cards_on_board(cards, num_rows, num_columns)
-        
 gui = Gui()
 gui.set_up_quit_button()
 gui.set_up_new_game_button()
