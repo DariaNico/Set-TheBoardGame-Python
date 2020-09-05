@@ -2,11 +2,12 @@ from tkinter import *
 import Card
 import Deck
 import GameLogic
-from tkinter import Frame, PhotoImage
+import ScoreBoard
 
 GameLogic = GameLogic.GameLogic
 Card = Card.Card
 Deck = Deck.Deck
+ScoreBoard = ScoreBoard.ScoreBoard
 
 class Gui:
     def __init__(self):
@@ -17,10 +18,7 @@ class Gui:
         self.num_cards = 12
         self.root = Tk()
         self.root.title("Best SET Game Ever By: The Truffle Oil Crew")
-        self.scoreboard_frame = Frame(self.root)
-        self.scoreboard_frame.pack(side =TOP)
-        self.score = Label(self.scoreboard_frame, text = "0")
-        self.score.pack(side = TOP)
+        self.scoreboard_frame = ScoreBoard(self.root)
         self.game_frame = Frame(self.root)
         self.game_frame.pack(side = TOP)
         self.control_frame = Frame(self.root)
@@ -59,7 +57,7 @@ class Gui:
             
         if len(self.game_logic.selected) == 3:
                 self.game_logic.check_selected_cards()
-                self.score['text'] = len(self.game_logic.successful_set_pile)
+                self.scoreboard_frame.add_point()
                 self.next_board()
         
     # Configure number of cards, rows, and columns the board will contain.
@@ -110,7 +108,7 @@ class Gui:
     def new_game(self):
         self.wipe_board()
         self.game_logic = GameLogic()
-        self.score['text'] = len(self.game_logic.successful_set_pile)
+        self.scoreboard_frame.reset_score()
         self.start_game()
         
     def wipe_board(self):
@@ -142,7 +140,6 @@ class Gui:
             cards.append(deck.getCard(i))
             print(f"{i}: {cards[i].getColor()}")
         self.place_cards_on_board(cards, num_rows, num_columns)
-        
         
 gui = Gui()
 gui.set_up_quit_button()
