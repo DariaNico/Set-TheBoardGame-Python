@@ -22,12 +22,6 @@ class Gui:
         self.control_frame = Frame(self.root)
         self.control_frame.pack(side = BOTTOM)
         self.game_logic = GameLogic()
-        quit_button = Button(self.control_frame, text = "Quit", command = lambda: self.root.destroy())
-        quit_button.pack(side = LEFT)
-        
-        new_game_button = Button(self.control_frame, text = "New Game", command = lambda: self.new_game())
-        new_game_button.pack(side = RIGHT)
-        print(f"TESTING CARD LENGTH: {len(self.game_logic.play_deck.cardList)}")
 
     # Adds cards to play board.
     # Parameter: List of 12 or 15 cards.
@@ -40,6 +34,14 @@ class Gui:
         
         self.cards = cards
         self.create_buttons()
+        
+    def set_up_quit_button(self):
+        quit_button = Button(self.control_frame, text = "Quit", command = lambda: self.root.destroy())
+        quit_button.pack(side = LEFT)
+        
+    def set_up_new_game_button(self):
+        new_game_button = Button(self.control_frame, text = "New Game", command = lambda: self.new_game())
+        new_game_button.pack(side = RIGHT)
 
     # Performs GUI reaction to one of the cards being selected and fires method to inform game 
     # logic which item was chosen
@@ -137,4 +139,8 @@ class Gui:
             print(f"{i}: {cards[i].getColor()}")
         self.place_cards_on_board(cards, num_rows, num_columns)
         
-Gui().start_game()
+        
+gui = Gui()
+gui.set_up_quit_button()
+gui.set_up_new_game_button()
+gui.start_game()
