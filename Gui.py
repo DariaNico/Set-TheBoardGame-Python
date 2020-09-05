@@ -1,8 +1,8 @@
-import tkinter as tk
+from tkinter import *
 import Card
 import Deck
 import GameLogic
-from tkinter import PhotoImage
+from tkinter import Frame, PhotoImage
 
 GameLogic = GameLogic.GameLogic
 Card = Card.Card
@@ -15,9 +15,13 @@ class Gui:
         self.num_rows = 3
         self.num_columns = 4
         self.num_cards = 12
-        self.window = tk.Tk()
+        self.root = Tk()
+        self.root.title("The Truffle Oil Crew")
+        self.game_frame = Frame(self.root)
+        self.game_frame.pack(side = TOP)
+        self.control_frame = Frame(self.root)
+        self.control_frame.pack(side = BOTTOM)
         self.game_logic = GameLogic()
-        print(f"TESTING CARD LENGTH: {len(self.game_logic.play_deck.cardList)}")
 
     # Adds cards to play board.
     # Parameter: List of 12 or 15 cards.
@@ -26,11 +30,18 @@ class Gui:
         num_cards = len(cards)
         if num_cards != 12 and num_cards != 15:
             raise Exception(f"Must place 12 or 15 cards. Placed {num_cards} cards.")
-        
         self.define_board(num_cards, num_rows, num_columns)
         
         self.cards = cards
         self.create_buttons()
+        
+    def set_up_quit_button(self):
+        quit_button = Button(self.control_frame, text = "Quit", command = lambda: self.root.destroy())
+        quit_button.pack(side = LEFT)
+        
+    def set_up_new_game_button(self):
+        new_game_button = Button(self.control_frame, text = "New Game", command = lambda: self.new_game())
+        new_game_button.pack(side = RIGHT)
 
     # Performs GUI reaction to one of the cards being selected and fires method to inform game 
     # logic which item was chosen
@@ -60,49 +71,56 @@ class Gui:
         #     buttons.append(button)
 
         # So I need to do it manually for now
-        window = self.window
+        window = self.game_frame
         cards = self.cards
         images = []
         for i in range(0,self.num_cards):
             images.append(PhotoImage(file = f"C:/Users/wgold/Documents/Intro-to-Game-Dev-Set-in-Python/CardImages/{cards[i].color} {cards[i].fill} {cards[i].shape}{cards[i].number}.gif"))
         self.buttons = [
-            tk.Button(window, image = images[0], command = lambda: self.selected(0)),
-            tk.Button(window, image = images[1], command = lambda: self.selected(1)),
-            tk.Button(window, image = images[2], command = lambda: self.selected(2)),
-            tk.Button(window, image = images[3], command = lambda: self.selected(3)),
-            tk.Button(window, image = images[4], command = lambda: self.selected(4)),
-            tk.Button(window, image = images[5], command = lambda: self.selected(5)),
-            tk.Button(window, image = images[6], command = lambda: self.selected(6)),
-            tk.Button(window, image = images[7], command = lambda: self.selected(7)),
-            tk.Button(window, image = images[8], command = lambda: self.selected(8)),
-            tk.Button(window, image = images[9], command = lambda: self.selected(9)),
-            tk.Button(window, image = images[10], command = lambda: self.selected(10)),
-            tk.Button(window, image = images[11], command = lambda: self.selected(11))
+            Button(window, image = images[0], command = lambda: self.selected(0)),
+            Button(window, image = images[1], command = lambda: self.selected(1)),
+            Button(window, image = images[2], command = lambda: self.selected(2)),
+            Button(window, image = images[3], command = lambda: self.selected(3)),
+            Button(window, image = images[4], command = lambda: self.selected(4)),
+            Button(window, image = images[5], command = lambda: self.selected(5)),
+            Button(window, image = images[6], command = lambda: self.selected(6)),
+            Button(window, image = images[7], command = lambda: self.selected(7)),
+            Button(window, image = images[8], command = lambda: self.selected(8)),
+            Button(window, image = images[9], command = lambda: self.selected(9)),
+            Button(window, image = images[10], command = lambda: self.selected(10)),
+            Button(window, image = images[11], command = lambda: self.selected(11))
         ]
         if (self.num_cards == 15):
-            self.buttons.append(tk.Button(window, image = images[12], command = lambda: self.selected(12)))
-            self.buttons.append(tk.Button(window, image = images[13], command = lambda: self.selected(13)))
-            self.buttons.append(tk.Button(window, image = images[14], command = lambda: self.selected(14)))
+            self.buttons.append(Button(window, image = images[12], command = lambda: self.selected(12)))
+            self.buttons.append(Button(window, image = images[13], command = lambda: self.selected(13)))
+            self.buttons.append(Button(window, image = images[14], command = lambda: self.selected(14)))
         for i in range(0,self.num_cards):
             self.buttons[i].image = images[i]
             
     def next_game(self):
-        for button in self.buttons:
-            button.grid_forget()
+        self.wipe_board()
         self.place_cards_on_board(self.game_logic.cards_in_play, 3, 4)
         self.create_grid(self.buttons, self.cards)
+        
+    def new_game(self):
+        self.wipe_board()
+        self.game_logic = GameLogic()
+        self.start_game()
+        
+    def wipe_board(self):
+        for button in self.buttons:
+            button.grid_forget()
         
     def start_game(self):
         
         #Configure window and label
         self.game_logic.start_game(12)
         self.place_cards_on_board(self.game_logic.cards_in_play, 3, 4)
-        self.window.title("GUI")
-        label = tk.Label(self.window, text = "First window")
+        label = Label(self.game_frame, text = "The 31st best SET game ever created.")
         label.grid(row=0, column=0)
         self.create_grid(self.buttons, self.cards)
 
-        self.window.mainloop()
+        self.root.mainloop()
         
     def create_grid(self,buttons, cards):
         for i in range(0,self.num_cards):
@@ -121,4 +139,8 @@ class Gui:
             print(f"{i}: {cards[i].getColor()}")
         self.place_cards_on_board(cards, num_rows, num_columns)
         
-Gui().start_game()
+        
+gui = Gui()
+gui.set_up_quit_button()
+gui.set_up_new_game_button()
+gui.start_game()
