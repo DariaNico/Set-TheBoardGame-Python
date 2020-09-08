@@ -23,7 +23,7 @@ class GameLogic:
 
         return drawn_cards
 
-    def start_game(self, draw_number):
+    def start_game(self, draw_number = 12):
         self.cards_in_play = self.draw_cards(draw_number)
 
     def replace_cards(self):
@@ -47,7 +47,7 @@ class GameLogic:
         comparison_logic = ComparisonLogic(selected)
 
         if len(selected) == 3:
-            if comparison_logic.is_a_card_set(selected):
+            if comparison_logic.is_a_card_set():
                 self.set_success(selected)
                 print("SUCCESS")
             else:

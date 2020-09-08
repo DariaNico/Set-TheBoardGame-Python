@@ -30,7 +30,9 @@ class ComparisonLogic:
         selected_shapes = list(map(lambda card: card.getShape(), selected))
         return { 'match': self.is_match(selected_shapes), 'set': self.is_set(selected_shapes) }
 
-    def is_a_card_set(self, selected = []):
+    def is_a_card_set(self):
+        selected = self.selected
+
         evaluated_selected_attrs = {
             'color': self.evaluate_selected_colors(selected),
             'fill': self.evaluate_selected_fills(selected),

@@ -28,7 +28,6 @@ class Gui:
     # Adds cards to play board.
     # Parameter: List of 12 or 15 cards.
     def place_cards_on_board(self, cards, num_rows, num_columns):
-        
         num_cards = len(cards)
         if num_cards != 12 and num_cards != 15:
             raise Exception(f"Must place 12 or 15 cards. Placed {num_cards} cards.")
@@ -116,9 +115,8 @@ class Gui:
             button.grid_forget()
         
     def start_game(self):
-        
         #Configure window and label
-        self.game_logic.start_game(12)
+        self.game_logic.start_game()
         self.place_cards_on_board(self.game_logic.cards_in_play, 3, 4)
         self.create_grid(self.buttons, self.cards)
 
