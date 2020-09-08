@@ -1,6 +1,7 @@
 from tkinter import *
 import GameLogic
 import ScoreBoard
+from winsound import *
 
 GameLogic = GameLogic.GameLogic
 ScoreBoard = ScoreBoard.ScoreBoard
@@ -41,6 +42,7 @@ class Gui:
         new_game_button.pack(side = RIGHT)
 
     def selected(self, button_id):
+        PlaySound('Sounds/CardSound.wav', SND_ASYNC)
         button_text = self.buttons[button_id]['text']
         self.buttons[button_id]['text'] = f"{button_text} selected"
         if (self.game_logic.cards_in_play[button_id] in self.game_logic.selected):
@@ -97,6 +99,7 @@ class Gui:
         self.create_grid(self.buttons, self.cards)
         
     def new_game(self):
+        PlaySound('Sounds/MenuSelect.wav', SND_ASYNC)
         self.wipe_board()
         self.game_logic.new_game()
         self.scoreboard_frame.update_score(len(self.game_logic.successful_set_pile))
