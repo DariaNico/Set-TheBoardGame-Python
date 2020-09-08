@@ -16,6 +16,9 @@ class GameLogic:
         # NOTE: keep for stats and fail count
         self.failed_set_pile = []
 
+    def cards_in_play_count(self):
+        return len(self.cards_in_play)
+
     def draw_cards(self, draw_number):
         drawn_cards = []
         for i in range(0, draw_number):
@@ -27,11 +30,17 @@ class GameLogic:
         self.cards_in_play = self.draw_cards(draw_number)
 
     def replace_cards(self):
-        drawn_cards = self.draw_cards(len(self.selected))
-        
-        for removed_card in self.selected:
-            i = self.cards_in_play.index(removed_card)
-            self.cards_in_play[i] = drawn_cards.pop()
+        cards_in_play_count = self.cards_in_play_count()
+
+        if cards_in_play_count == 12:
+            for removed_card in self.selected:
+                i = self.cards_in_play.index(removed_card)
+                self.cards_in_play[i] = self.play_deck.draw()
+        elif cards_in_play_count == 15:
+            for removed_card in self.selected:
+                self.cards_in_play.remove(removed_card)
+        else:
+            raise Exception(f'Wrong number of cards on board: expected 12 or 15, instead got {cards_in_play_count}.')
 
     def set_success(self, selected):
         self.successful_set_pile.append(selected)
