@@ -26,24 +26,29 @@ class GameLogic:
     def is_set(selected_attrs):
         return len(set(selected_attrs)) == 3
 
-    def evaluate_selected_colors(self):
-        selected_colors = list(map(lambda card: card.getColor(), self.selected))
+    def evaluate_selected_colors(self, selected = []):
+        selected_colors = list(map(lambda card: card.getColor(), selected))
         return { 'match': self.is_match(selected_colors), 'set': self.is_set(selected_colors) }
 
-    def evaluate_selected_fills(self):
-        selected_fills = list(map(lambda card: card.getFill(), self.selected))
+    def evaluate_selected_fills(self, selected = []):
+        selected_fills = list(map(lambda card: card.getFill(), selected))
         return { 'match': self.is_match(selected_fills), 'set': self.is_set(selected_fills) }
 
-    def evaluate_selected_numbers(self):
-        selected_numbers = list(map(lambda card: card.getNumber(), self.selected))
+    def evaluate_selected_numbers(self, selected = []):
+        selected_numbers = list(map(lambda card: card.getNumber(), selected))
         return { 'match': self.is_match(selected_numbers), 'set': self.is_set(selected_numbers) }
 
-    def evaluate_selected_shapes(self):
-        selected_shapes = list(map(lambda card: card.getShape(), self.selected))
+    def evaluate_selected_shapes(self, selected = []):
+        selected_shapes = list(map(lambda card: card.getShape(), selected))
         return { 'match': self.is_match(selected_shapes), 'set': self.is_set(selected_shapes) }
 
-    def is_a_card_set(self):
-        evaluated_selected_attrs = { 'color': self.evaluate_selected_colors(), 'fill': self.evaluate_selected_fills(), 'number': self.evaluate_selected_numbers(), 'shape': self.evaluate_selected_shapes() }
+    def is_a_card_set(self, selected = []):
+        evaluated_selected_attrs = {
+            'color': self.evaluate_selected_colors(selected),
+            'fill': self.evaluate_selected_fills(selected),
+            'number': self.evaluate_selected_numbers(selected),
+            'shape': self.evaluate_selected_shapes(selected)
+        }
         selected_match_bools = []
         selected_set_bools = []
 
@@ -73,20 +78,22 @@ class GameLogic:
             i = self.cards_in_play.index(removed_card)
             self.cards_in_play[i] = drawn_cards.pop()
 
-    def set_success(self):
-        self.successful_set_pile.append(self.selected)
+    def set_success(self, selected):
+        self.successful_set_pile.append(selected)
         self.replace_cards()
         self.selected.clear()
 
-    def set_failure(self):
-        self.failed_set_pile.append(self.selected)
+    def set_failure(self, selected):
+        self.failed_set_pile.append(selected)
         self.selected.clear()
 
     def check_selected_cards(self):
-        if len(self.selected) == 3:
-            if self.is_a_card_set():
-                self.set_success()
+        selected = self.selected
+
+        if len(selected) == 3:
+            if self.is_a_card_set(selected):
+                self.set_success(selected)
                 print("SUCCESS")
             else:
-                self.set_failure()
+                self.set_failure(selected)
                 print("FAILURE")
