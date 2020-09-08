@@ -28,7 +28,6 @@ class Gui:
     # Adds cards to play board.
     # Parameter: List of 12 or 15 cards.
     def place_cards_on_board(self, cards, num_rows, num_columns):
-        
         num_cards = len(cards)
         if num_cards != 12 and num_cards != 15:
             raise Exception(f"Must place 12 or 15 cards. Placed {num_cards} cards.")
@@ -107,7 +106,7 @@ class Gui:
         
     def new_game(self):
         self.wipe_board()
-        self.game_logic = GameLogic()
+        self.game_logic.new_game()
         self.scoreboard_frame.reset_score()
         self.start_game()
         
@@ -116,18 +115,17 @@ class Gui:
             button.grid_forget()
         
     def start_game(self):
-        
         #Configure window and label
-        self.game_logic.start_game(12)
+        self.game_logic.new_game()
         self.place_cards_on_board(self.game_logic.cards_in_play, 3, 4)
         self.create_grid(self.buttons, self.cards)
 
         self.root.mainloop()
         
-    def create_grid(self,buttons, cards):
-        for i in range(0,self.num_cards):
-            row = int(i/self.num_columns)+1
-            column = int(i%self.num_columns)
+    def create_grid(self, buttons, cards):
+        for i in range(0, self.num_cards):
+            row = int(i / self.num_columns) + 1
+            column = int(i % self.num_columns)
             self.buttons[i].grid(row = row, column = column)
 
     # For testing during development 
@@ -136,7 +134,7 @@ class Gui:
         deck = Deck()
         deck.shuffle()
         cards = []
-        for i in range(0,num_cards):
+        for i in range(0, num_cards):
             cards.append(deck.getCard(i))
             print(f"{i}: {cards[i].getColor()}")
         self.place_cards_on_board(cards, num_rows, num_columns)
