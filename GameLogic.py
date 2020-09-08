@@ -71,7 +71,8 @@ class GameLogic:
         else:
             print('CONTINUE')
 
-    def start_game(self, draw_number = 12):
+    # TODO: remove win_test behavior!
+    def start_game(self, draw_number = 12, win_test = False):
         self.failed_set_pile.clear()
         self.successful_set_pile.clear()
         self.selected.clear()
@@ -80,6 +81,11 @@ class GameLogic:
         self.play_deck.shuffle()
 
         self.cards_in_play = self.draw_cards(draw_number)
+
+        if win_test:
+            print('TEST: WIN MODE')
+            self.play_deck.cardList = []
+
         self.game_count += 1
         self.game_status = 'playing'
         print(f'NEW GAME #{self.game_count}')
