@@ -75,7 +75,7 @@ class Gui:
         cards = self.cards
         images = []
         for i in range(0,self.num_cards):
-            images.append(PhotoImage(file = f"C:/Users/wgold/Documents/Intro-to-Game-Dev-Set-in-Python/CardImages/{cards[i].color} {cards[i].fill} {cards[i].shape}{cards[i].number}.gif"))
+            images.append(PhotoImage(file = f"CardImages/{cards[i].color} {cards[i].fill} {cards[i].shape}{cards[i].number}.gif"))
         self.buttons = [
             Button(window, image = images[0], command = lambda: self.selected(0)),
             Button(window, image = images[1], command = lambda: self.selected(1)),
@@ -105,8 +105,8 @@ class Gui:
         
     def new_game(self):
         self.wipe_board()
-        self.game_logic = GameLogic()
-        self.scoreboard_frame.update_score(self.game_logic.get_score())
+        self.game_logic.new_game()
+        self.scoreboard_frame.reset_score()
         self.start_game()
         
     def wipe_board(self):
@@ -114,16 +114,17 @@ class Gui:
             button.grid_forget()
         
     def start_game(self):
-        self.game_logic.start_game(12)
+        #Configure window and label
+        self.game_logic.new_game()
         self.place_cards_on_board(self.game_logic.cards_in_play, 3, 4)
         self.create_grid(self.buttons, self.cards)
 
         self.root.mainloop()
         
-    def create_grid(self,buttons, cards):
-        for i in range(0,self.num_cards):
-            row = int(i/self.num_columns)+1
-            column = int(i%self.num_columns)
+    def create_grid(self, buttons, cards):
+        for i in range(0, self.num_cards):
+            row = int(i / self.num_columns) + 1
+            column = int(i % self.num_columns)
             self.buttons[i].grid(row = row, column = column)
 
 gui = Gui()
