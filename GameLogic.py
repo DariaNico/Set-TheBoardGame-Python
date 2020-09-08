@@ -28,18 +28,6 @@ class GameLogic:
 
         return drawn_cards
 
-    def start_game(self, draw_number = 12):
-        self.failed_set_pile.clear()
-        self.successful_set_pile.clear()
-        self.selected.clear()
-
-        self.play_deck = Deck()
-        self.play_deck.shuffle()
-
-        self.cards_in_play = self.draw_cards(draw_number)
-        self.game_count += 1
-        self.game_status = 'playing'
-
     def replace_cards(self):
         cards_in_play_count = self.cards_in_play_count()
 
@@ -62,6 +50,27 @@ class GameLogic:
         self.failed_set_pile.append(selected)
         self.selected.clear()
 
+    def apply_game_status(self):
+        game_status = self.game_status
+        if game_status == 'win':
+                print('WIN'),
+        elif game_status == 'lose':
+                print('LOSER'),
+        else:
+            print('CONTINUE')
+
+    def start_game(self, draw_number = 12):
+        self.failed_set_pile.clear()
+        self.successful_set_pile.clear()
+        self.selected.clear()
+
+        self.play_deck = Deck()
+        self.play_deck.shuffle()
+
+        self.cards_in_play = self.draw_cards(draw_number)
+        self.game_count += 1
+        self.game_status = 'playing'
+
     def check_selected_cards(self):
         selected = self.selected
         comparison_logic = ComparisonLogic(selected)
@@ -75,12 +84,3 @@ class GameLogic:
                 self.set_failure(selected)
                 self.apply_game_status()
                 print("FAILURE")
-
-    def apply_game_status(self):
-        game_status = self.game_status
-        if game_status == 'win':
-                print('WIN'),
-        elif game_status == 'lose':
-                print('LOSER'),
-        else:
-            print('CONTINUE')
