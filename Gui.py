@@ -1,19 +1,14 @@
 from tkinter import *
-import Card
-import Deck
 import GameLogic
 import ScoreBoard
 
 GameLogic = GameLogic.GameLogic
-Card = Card.Card
-Deck = Deck.Deck
 ScoreBoard = ScoreBoard.ScoreBoard
 
 class Gui:
     def __init__(self):
         self.cards = []
         self.buttons = []
-        self.num_rows = 3
         self.num_columns = 4
         self.num_cards = 12
         self.root = Tk()
@@ -27,13 +22,14 @@ class Gui:
 
     # Adds cards to play board.
     # Parameter: List of 12 or 15 cards.
-    def place_cards_on_board(self, cards, num_rows, num_columns):
-        num_cards = len(cards)
-        if num_cards != 12 and num_cards != 15:
-            raise Exception(f"Must place 12 or 15 cards. Placed {num_cards} cards.")
-        self.define_board(num_cards, num_rows, num_columns)
-        
+    def place_cards_on_board(self, cards):
         self.cards = cards
+        if len(cards) == 12:
+            self.num_cards = 12
+            self.num_columns = 4
+        elif len(cards) == 15:
+            self.num_cards = 15
+            self.num_columns = 5
         self.create_buttons()
         
     def set_up_quit_button(self):
@@ -44,26 +40,21 @@ class Gui:
         new_game_button = Button(self.control_frame, text = "New Game", command = lambda: self.new_game())
         new_game_button.pack(side = RIGHT)
 
-    # Performs GUI reaction to one of the cards being selected and fires method to inform game 
-    # logic which item was chosen
-    # TODO call method in game logic, should be able to identify with buttonId which matches the index of the card
     def selected(self, button_id):
         button_text = self.buttons[button_id]['text']
         self.buttons[button_id]['text'] = f"{button_text} selected"
-        self.game_logic.selected.append(self.cards[button_id])
+        if (self.game_logic.cards_in_play[button_id] in self.game_logic.selected):
+            self.game_logic.selected.remove(self.game_logic.cards_in_play[button_id])
+            self.buttons[button_id]['bg'] = 'SystemButtonFace'
+        else: 
+            self.game_logic.selected.append(self.cards[button_id])
+            self.buttons[button_id]['bg'] = '#87CEEB'
         for i in range(0, len(self.game_logic.selected)):
             print(self.game_logic.selected[i].color)
             
         if len(self.game_logic.selected) == 3:
                 self.game_logic.check_selected_cards()
-                self.scoreboard_frame.add_point()
                 self.next_board()
-        
-    # Configure number of cards, rows, and columns the board will contain.
-    def define_board(self, num_cards, num_rows, num_columns):
-        self.num_cards = num_cards
-        self.num_rows = num_rows
-        self.num_columns = num_columns
         
     def create_buttons(self):
         # Adding the buttons in a loop in the way below results in all the lambda events to recieve the last index
@@ -101,13 +92,14 @@ class Gui:
             
     def next_board(self):
         self.wipe_board()
-        self.place_cards_on_board(self.game_logic.cards_in_play, 3, 4)
+        self.scoreboard_frame.update_score(len(self.game_logic.successful_set_pile))
+        self.place_cards_on_board(self.game_logic.cards_in_play)
         self.create_grid(self.buttons, self.cards)
         
     def new_game(self):
         self.wipe_board()
         self.game_logic.new_game()
-        self.scoreboard_frame.reset_score()
+        self.scoreboard_frame.update_score(len(self.game_logic.successful_set_pile))
         self.start_game()
         
     def wipe_board(self):
@@ -117,7 +109,8 @@ class Gui:
     def start_game(self):
         #Configure window and label
         self.game_logic.new_game()
-        self.place_cards_on_board(self.game_logic.cards_in_play, 3, 4)
+        self.scoreboard_frame.update_score(len(self.game_logic.successful_set_pile))
+        self.place_cards_on_board(self.game_logic.cards_in_play)
         self.create_grid(self.buttons, self.cards)
 
         self.root.mainloop()
@@ -128,17 +121,6 @@ class Gui:
             column = int(i % self.num_columns)
             self.buttons[i].grid(row = row, column = column)
 
-    # For testing during development 
-    #TODO remove or make a separate test file when ready
-    def self_test(self, num_cards, num_rows, num_columns):
-        deck = Deck()
-        deck.shuffle()
-        cards = []
-        for i in range(0, num_cards):
-            cards.append(deck.getCard(i))
-            print(f"{i}: {cards[i].getColor()}")
-        self.place_cards_on_board(cards, num_rows, num_columns)
-        
 gui = Gui()
 gui.set_up_quit_button()
 gui.set_up_new_game_button()
