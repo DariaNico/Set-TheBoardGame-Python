@@ -78,7 +78,7 @@ class Gui:
         self.buttons = []
         for i in range(0,self.num_cards):
             image = PhotoImage(file = f"CardImages/{cards[i].color} {cards[i].fill} {cards[i].shape}{cards[i].number}.gif")
-            self.buttons.append(Button(window, image = image, command = lambda i=i: self.selected(i)))
+            self.buttons.append(Button(window, image = image, command = lambda i=i: self.selected(i), highlightbackground='#3E4149'))
             self.buttons[i].image = image
             self.buttons[i].bind('<Enter>', lambda event, i=i : self.show_tooltip(i))
             self.buttons[i].bind('<Leave>', self.hide_tooltip)
