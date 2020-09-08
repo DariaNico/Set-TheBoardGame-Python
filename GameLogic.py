@@ -6,7 +6,7 @@ Deck = Deck.Deck
 
 class GameLogic:
     def __init__(self):
-        self.play_deck = None
+        self.play_deck = Deck()
 
         self.cards_in_play = []
         self.selected = []
@@ -20,6 +20,10 @@ class GameLogic:
 
     def cards_in_play_count(self):
         return len(self.cards_in_play)
+    def selected_count(self):
+        return len(self.selected)
+    def play_deck_count(self):
+        return self.play_deck.getNumberOfCards()
 
     def draw_cards(self, draw_number):
         drawn_cards = []
@@ -28,34 +32,42 @@ class GameLogic:
 
         return drawn_cards
 
+    # TODO: rename this to reflect functionality better
     def replace_cards(self):
         cards_in_play_count = self.cards_in_play_count()
+        play_deck_count = self.play_deck_count()
+        selected_count = self.selected_count()
 
-        if cards_in_play_count == 12:
+        if cards_in_play_count == 12 and play_deck_count >= selected_count:
             for removed_card in self.selected:
                 i = self.cards_in_play.index(removed_card)
                 self.cards_in_play[i] = self.play_deck.draw()
+        elif cards_in_play_count == 12 and play_deck_count < selected_count:
+            self.game_status = 'win'
         elif cards_in_play_count == 15:
             for removed_card in self.selected:
                 self.cards_in_play.remove(removed_card)
         else:
-            raise Exception(f'Wrong number of cards on board: expected 12 or 15, instead got {cards_in_play_count}.')
+            print('ERROR')
+            raise Exception('Entered Impossible Game State!')
 
-    def set_success(self, selected):
+    def set_success_behavior(self, selected):
         self.successful_set_pile.append(selected)
         self.replace_cards()
         self.selected.clear()
 
-    def set_failure(self, selected):
+    def set_failure_behavior(self, selected):
         self.failed_set_pile.append(selected)
         self.selected.clear()
 
     def apply_game_status(self):
         game_status = self.game_status
         if game_status == 'win':
-                print('WIN'),
+                print('WINNER: You get a chicken dinner!'),
+                self.start_game()
         elif game_status == 'lose':
-                print('LOSER'),
+                print('LOSER: major failure!'),
+                self.start_game()
         else:
             print('CONTINUE')
 
@@ -70,17 +82,16 @@ class GameLogic:
         self.cards_in_play = self.draw_cards(draw_number)
         self.game_count += 1
         self.game_status = 'playing'
+        print(f'NEW GAME #{self.game_count}')
 
     def check_selected_cards(self):
         selected = self.selected
         comparison_logic = ComparisonLogic(selected)
 
-        if len(selected) == 3:
+        if self.selected_count() == 3:
             if comparison_logic.is_a_card_set():
-                self.set_success(selected)
+                self.set_success_behavior(selected)
                 self.apply_game_status()
-                print("SUCCESS")
             else:
-                self.set_failure(selected)
+                self.set_failure_behavior(selected)
                 self.apply_game_status()
-                print("FAILURE")
