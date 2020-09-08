@@ -75,29 +75,10 @@ class Gui:
         # So I need to do it manually for now
         window = self.game_frame
         cards = self.cards
-        images = []
         for i in range(0,self.num_cards):
-            images.append(PhotoImage(file = f"CardImages/{cards[i].color} {cards[i].fill} {cards[i].shape}{cards[i].number}.gif"))
-        self.buttons = [
-            Button(window, image = images[0], command = lambda: self.selected(0)),
-            Button(window, image = images[1], command = lambda: self.selected(1)),
-            Button(window, image = images[2], command = lambda: self.selected(2)),
-            Button(window, image = images[3], command = lambda: self.selected(3)),
-            Button(window, image = images[4], command = lambda: self.selected(4)),
-            Button(window, image = images[5], command = lambda: self.selected(5)),
-            Button(window, image = images[6], command = lambda: self.selected(6)),
-            Button(window, image = images[7], command = lambda: self.selected(7)),
-            Button(window, image = images[8], command = lambda: self.selected(8)),
-            Button(window, image = images[9], command = lambda: self.selected(9)),
-            Button(window, image = images[10], command = lambda: self.selected(10)),
-            Button(window, image = images[11], command = lambda: self.selected(11))
-        ]
-        if (self.num_cards == 15):
-            self.buttons.append(Button(window, image = images[12], command = lambda: self.selected(12)))
-            self.buttons.append(Button(window, image = images[13], command = lambda: self.selected(13)))
-            self.buttons.append(Button(window, image = images[14], command = lambda: self.selected(14)))
-        for i in range(0,self.num_cards):
-            self.buttons[i].image = images[i]
+            image = PhotoImage(file = f"CardImages/{cards[i].color} {cards[i].fill} {cards[i].shape}{cards[i].number}.gif")
+            self.buttons.append(Button(window, image = image, command = lambda i=i: self.selected(i)))
+            self.buttons[i].image = image
             self.buttons[i].bind('<Enter>', lambda event, i=i : self.show_tooltip(i))
             self.buttons[i].bind('<Leave>', self.hide_tooltip)
             
