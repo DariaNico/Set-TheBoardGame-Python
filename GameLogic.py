@@ -92,16 +92,3 @@ class GameLogic:
             else:
                 self.set_failure()
                 print("FAILURE")
-    # TODO add play logic
-    # Pseudo: when selected length == 3, immediately check set validity
-    #   If is valid card set, add to successful_set_pile as a tuple and refil the board. Show and alert of success
-    #   Else empty out selected and deselect in gui. show an alert of failure
-
-    # Provide a reset board button
-    # Will probably not need a discard
-    # What are the win/lose conditions?
-    #   Win: TODO
-    #   Lose: TODO
-    # End game conditions?
-    #   Add a I'm done button?
-    # TODO: Add a number of possible sets left logic?
