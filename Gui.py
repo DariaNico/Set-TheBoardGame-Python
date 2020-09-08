@@ -75,6 +75,7 @@ class Gui:
         # So I need to do it manually for now
         window = self.game_frame
         cards = self.cards
+        self.buttons = []
         for i in range(0,self.num_cards):
             image = PhotoImage(file = f"CardImages/{cards[i].color} {cards[i].fill} {cards[i].shape}{cards[i].number}.gif")
             self.buttons.append(Button(window, image = image, command = lambda i=i: self.selected(i)))
@@ -102,8 +103,6 @@ class Gui:
     def new_game(self):
         PlaySound('Sounds/MenuSelect.wav', SND_ASYNC)
         self.wipe_board()
-        self.game_logic.new_game()
-        self.scoreboard_frame.update_score(len(self.game_logic.successful_set_pile))
         self.start_game()
         
     def wipe_board(self):
