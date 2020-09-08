@@ -112,7 +112,9 @@ class GameLogic:
         if self.selected_count() == 3:
             if comparison_logic.is_a_card_set():
                 self.set_success_behavior(selected)
+                print('SUCCESS! Good Job')
             else:
                 self.set_failure_behavior(selected)
+                print('Failure! Be Better')
 
             self.apply_game_status()
