@@ -2,9 +2,14 @@ from tkinter import *
 import GameLogic
 import ScoreBoard
 from winsound import *
+import ToolTip
+import ToolTipButton
+from functools import partial
 
 GameLogic = GameLogic.GameLogic
 ScoreBoard = ScoreBoard.ScoreBoard
+ToolTip = ToolTip.ToolTip
+ToolTipButton = ToolTipButton.ToolTipButton
 
 class Gui:
     def __init__(self):
@@ -19,6 +24,8 @@ class Gui:
         self.game_frame.pack(side = TOP)
         self.control_frame = Frame(self.root)
         self.control_frame.pack(side = BOTTOM)
+        self.ttb = ToolTipButton(self.root)
+        self.tooltip = ToolTip()
         self.game_logic = GameLogic()
 
     # Adds cards to play board.
@@ -33,13 +40,13 @@ class Gui:
             self.num_columns = 5
         self.create_buttons()
         
-    def set_up_quit_button(self):
-        quit_button = Button(self.control_frame, text = "Quit", command = lambda: self.root.destroy())
-        quit_button.pack(side = LEFT)
-        
-    def set_up_new_game_button(self):
+    def set_up_control_buttons(self):
         new_game_button = Button(self.control_frame, text = "New Game", command = lambda: self.new_game())
         new_game_button.pack(side = RIGHT)
+        quit_button = Button(self.control_frame, text = "Quit", command = lambda: self.root.destroy())
+        quit_button.pack(side = LEFT)
+        self.ttb = ToolTipButton(self.control_frame)
+        self.ttb.button.pack(side=LEFT)
 
     def selected(self, button_id):
         PlaySound('Sounds/CardSound.wav', SND_ASYNC)
@@ -91,6 +98,19 @@ class Gui:
             self.buttons.append(Button(window, image = images[14], command = lambda: self.selected(14)))
         for i in range(0,self.num_cards):
             self.buttons[i].image = images[i]
+            self.buttons[i].bind('<Enter>', lambda event, i=i : self.show_tooltip(i))
+            self.buttons[i].bind('<Leave>', self.hide_tooltip)
+            
+    def show_tooltip(self, id):
+        card = self.cards[id]
+        print("in show tooltip")
+        if self.ttb.is_on:
+            self.tooltip.show_tooltip(f"{card.color}\n{card.fill}\n{card.shape}\n{card.number}", self.root.winfo_pointerx(), self.root.winfo_pointery())
+            
+    def hide_tooltip(self, event):
+        print("in hide_tooltip")
+        if self.ttb.is_on:
+            self.tooltip.hide_tooltip()
             
     def next_board(self):
         self.wipe_board()
@@ -125,6 +145,5 @@ class Gui:
             self.buttons[i].grid(row = row, column = column)
 
 gui = Gui()
-gui.set_up_quit_button()
-gui.set_up_new_game_button()
+gui.set_up_control_buttons()
 gui.start_game()
