@@ -32,8 +32,7 @@ class GameLogic:
 
         return drawn_cards
 
-    # TODO: rename this to reflect functionality better
-    def replace_cards(self):
+    def successful_set_followup(self):
         cards_in_play_count = self.cards_in_play_count()
         play_deck_count = self.play_deck_count()
         selected_count = self.selected_count()
@@ -51,13 +50,29 @@ class GameLogic:
             print('ERROR')
             raise Exception('Entered Impossible Game State!')
 
+    def failed_set_followup(self):
+        cards_in_play_count = self.cards_in_play_count()
+        play_deck_count = self.play_deck_count()
+
+        if cards_in_play_count == 12 and play_deck_count >= 3:
+            drawn_cards = self.draw_cards(3)
+            self.cards_in_play += drawn_cards
+        elif cards_in_play_count == 12 and play_deck_count < 3:
+            self.game_status = 'lose'
+        elif cards_in_play_count == 15:
+            self.game_status = 'lose'
+        else:
+            print('ERROR')
+            raise Exception('Entered Impossible Game State!')
+
     def set_success_behavior(self, selected):
         self.successful_set_pile.append(selected)
-        self.replace_cards()
+        self.successful_set_followup()
         self.selected.clear()
 
     def set_failure_behavior(self, selected):
         self.failed_set_pile.append(selected)
+        self.failed_set_followup()
         self.selected.clear()
 
     def apply_game_status(self):
@@ -97,7 +112,7 @@ class GameLogic:
         if self.selected_count() == 3:
             if comparison_logic.is_a_card_set():
                 self.set_success_behavior(selected)
-                self.apply_game_status()
             else:
                 self.set_failure_behavior(selected)
-                self.apply_game_status()
+
+            self.apply_game_status()
