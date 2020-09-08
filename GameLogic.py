@@ -16,6 +16,9 @@ class GameLogic:
         # NOTE: keep for stats and fail count
         self.failed_set_pile = []
 
+        self.game_count = 0
+        self.game_status = 'new_game'
+
     def cards_in_play_count(self):
         return len(self.cards_in_play)
 
@@ -28,6 +31,8 @@ class GameLogic:
 
     def start_game(self, draw_number = 12):
         self.cards_in_play = self.draw_cards(draw_number)
+        self.game_count += 1
+        self.game_status = 'playing'
 
     def replace_cards(self):
         cards_in_play_count = self.cards_in_play_count()
@@ -58,7 +63,18 @@ class GameLogic:
         if len(selected) == 3:
             if comparison_logic.is_a_card_set():
                 self.set_success(selected)
+                self.apply_game_status()
                 print("SUCCESS")
             else:
                 self.set_failure(selected)
+                self.apply_game_status()
                 print("FAILURE")
+
+    def apply_game_status(self):
+        game_status = self.game_status
+        if game_status == 'win':
+                print('WIN'),
+        elif game_status == 'lose':
+                print('LOSER'),
+        else:
+            print('CONTINUE')
