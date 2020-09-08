@@ -48,7 +48,7 @@ class Gui:
             self.buttons[button_id]['bg'] = 'SystemButtonFace'
         else: 
             self.game_logic.selected.append(self.cards[button_id])
-            self.buttons[button_id]['bg'] = 'SkyBlue1'
+            self.buttons[button_id]['bg'] = '#87CEEB'
         for i in range(0, len(self.game_logic.selected)):
             print(self.game_logic.selected[i].color)
             
