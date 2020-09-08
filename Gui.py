@@ -1,7 +1,7 @@
 from tkinter import *
 import GameLogic
 import ScoreBoard
-from playsound import playsound
+#from playsound import playsound #TODO Uncomment this if you want sound
 import ToolTip
 import ToolTipButton
 from functools import partial
@@ -49,7 +49,7 @@ class Gui:
         self.ttb.button.pack(side=LEFT)
 
     def selected(self, button_id):
-        playsound('Sounds/CardSound.wav')
+        #playsound('Sounds/CardSound.wav') #TODO Uncomment this if you want sound
         button_text = self.buttons[button_id]['text']
         self.buttons[button_id]['text'] = f"{button_text} selected"
         if (self.game_logic.cards_in_play[button_id] in self.game_logic.selected):
@@ -101,7 +101,7 @@ class Gui:
         self.create_grid(self.buttons, self.cards)
         
     def new_game(self):
-        playsound('Sounds/MenuSelect.wav')
+        #playsound('Sounds/MenuSelect.wav') #TODO Uncomment this if you want sound
         self.wipe_board()
         self.start_game()
         
