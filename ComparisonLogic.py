@@ -46,7 +46,9 @@ class ComparisonLogic:
             selected_match_bools.append(selected_attr_bools['match'])
             selected_set_bools.append(selected_attr_bools['set'])
 
-        if selected_match_bools.count(True) + selected_set_bools.count(True) == 4:
+        if selected_set_bools.count(True) == 0: # No sets, just matches, thus not a set
+            return False
+        elif selected_match_bools.count(True) + selected_set_bools.count(True) == 4:
             return True
         else:
             return False
