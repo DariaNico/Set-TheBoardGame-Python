@@ -6,8 +6,7 @@ Deck = Deck.Deck
 
 class GameLogic:
     def __init__(self):
-        self.play_deck = Deck()
-        self.play_deck.shuffle()
+        self.play_deck = None
 
         self.cards_in_play = []
         self.selected = []
@@ -30,6 +29,13 @@ class GameLogic:
         return drawn_cards
 
     def start_game(self, draw_number = 12):
+        self.failed_set_pile.clear()
+        self.successful_set_pile.clear()
+        self.selected.clear()
+
+        self.play_deck = Deck()
+        self.play_deck.shuffle()
+
         self.cards_in_play = self.draw_cards(draw_number)
         self.game_count += 1
         self.game_status = 'playing'
