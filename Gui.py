@@ -122,10 +122,10 @@ class Gui:
 
         self.root.mainloop()
         
-    def create_grid(self,buttons, cards):
-        for i in range(0,self.num_cards):
-            row = int(i/self.num_columns)+1
-            column = int(i%self.num_columns)
+    def create_grid(self, buttons, cards):
+        for i in range(0, self.num_cards):
+            row = int(i / self.num_columns) + 1
+            column = int(i % self.num_columns)
             self.buttons[i].grid(row = row, column = column)
 
     # For testing during development 
@@ -134,7 +134,7 @@ class Gui:
         deck = Deck()
         deck.shuffle()
         cards = []
-        for i in range(0,num_cards):
+        for i in range(0, num_cards):
             cards.append(deck.getCard(i))
             print(f"{i}: {cards[i].getColor()}")
         self.place_cards_on_board(cards, num_rows, num_columns)
