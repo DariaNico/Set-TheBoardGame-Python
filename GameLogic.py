@@ -1,7 +1,5 @@
-import Card
 import Deck
 
-Card = Card.Card
 Deck = Deck.Deck
 
 class GameLogic:
