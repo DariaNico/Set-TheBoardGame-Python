@@ -1,19 +1,14 @@
 from tkinter import *
-import Card
-import Deck
 import GameLogic
 import ScoreBoard
 
 GameLogic = GameLogic.GameLogic
-Card = Card.Card
-Deck = Deck.Deck
 ScoreBoard = ScoreBoard.ScoreBoard
 
 class Gui:
     def __init__(self):
         self.cards = []
         self.buttons = []
-        self.num_rows = 3
         self.num_columns = 4
         self.num_cards = 12
         self.root = Tk()
@@ -27,10 +22,14 @@ class Gui:
 
     # Adds cards to play board.
     # Parameter: List of 12 or 15 cards.
-    def place_cards_on_board(self, cards, num_rows, num_columns):
-        num_cards = len(cards)
-        self.define_board(num_cards, num_rows, num_columns)
+    def place_cards_on_board(self, cards):
         self.cards = cards
+        if len(cards) == 12:
+            self.num_cards = 12
+            self.num_columns = 4
+        elif len(cards) == 15:
+            self.num_cards = 15
+            self.num_columns = 5
         self.create_buttons()
         
     def set_up_quit_button(self):
@@ -56,12 +55,6 @@ class Gui:
         if len(self.game_logic.selected) == 3:
                 self.game_logic.check_selected_cards()
                 self.next_board()
-        
-    # Configure number of cards, rows, and columns the board will contain.
-    def define_board(self, num_cards, num_rows, num_columns):
-        self.num_cards = num_cards
-        self.num_rows = num_rows
-        self.num_columns = num_columns
         
     def create_buttons(self):
         # Adding the buttons in a loop in the way below results in all the lambda events to recieve the last index
@@ -99,14 +92,14 @@ class Gui:
             
     def next_board(self):
         self.wipe_board()
-        self.scoreboard_frame.update_score(self.game_logic.get_score())
-        self.place_cards_on_board(self.game_logic.cards_in_play, 3, 4)
+        self.scoreboard_frame.update_score(len(self.game_logic.successful_set_pile))
+        self.place_cards_on_board(self.game_logic.cards_in_play)
         self.create_grid(self.buttons, self.cards)
         
     def new_game(self):
         self.wipe_board()
         self.game_logic.new_game()
-        self.scoreboard_frame.reset_score()
+        self.scoreboard_frame.update_score(len(self.game_logic.successful_set_pile))
         self.start_game()
         
     def wipe_board(self):
@@ -116,7 +109,8 @@ class Gui:
     def start_game(self):
         #Configure window and label
         self.game_logic.new_game()
-        self.place_cards_on_board(self.game_logic.cards_in_play, 3, 4)
+        self.scoreboard_frame.update_score(len(self.game_logic.successful_set_pile))
+        self.place_cards_on_board(self.game_logic.cards_in_play)
         self.create_grid(self.buttons, self.cards)
 
         self.root.mainloop()
