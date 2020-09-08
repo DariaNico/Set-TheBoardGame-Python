@@ -78,7 +78,7 @@ class Gui:
         cards = self.cards
         images = []
         for i in range(0,self.num_cards):
-            images.append(PhotoImage(file = f"C:/Users/wgold/Documents/Intro-to-Game-Dev-Set-in-Python/CardImages/{cards[i].color} {cards[i].fill} {cards[i].shape}{cards[i].number}.gif"))
+            images.append(PhotoImage(file = f"CardImages/{cards[i].color} {cards[i].fill} {cards[i].shape}{cards[i].number}.gif"))
         self.buttons = [
             Button(window, image = images[0], command = lambda: self.selected(0)),
             Button(window, image = images[1], command = lambda: self.selected(1)),
