@@ -79,15 +79,15 @@ class GameLogic:
         game_status = self.game_status
         if game_status == 'win':
                 print('WINNER: You get a chicken dinner!'),
-                self.start_game()
+                self.new_game()
         elif game_status == 'lose':
                 print('LOSER: major failure!'),
-                self.start_game()
+                self.new_game()
         else:
             print('CONTINUE')
 
     # TODO: remove win_test behavior!
-    def start_game(self, draw_number = 12, win_test = False):
+    def new_game(self, draw_number = 12, win_test = False):
         self.failed_set_pile.clear()
         self.successful_set_pile.clear()
         self.selected.clear()

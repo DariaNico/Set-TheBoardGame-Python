@@ -106,7 +106,7 @@ class Gui:
         
     def new_game(self):
         self.wipe_board()
-        self.game_logic = GameLogic()
+        self.game_logic.new_game()
         self.scoreboard_frame.reset_score()
         self.start_game()
         
@@ -116,7 +116,7 @@ class Gui:
         
     def start_game(self):
         #Configure window and label
-        self.game_logic.start_game()
+        self.game_logic.new_game()
         self.place_cards_on_board(self.game_logic.cards_in_play, 3, 4)
         self.create_grid(self.buttons, self.cards)
 
