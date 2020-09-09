@@ -46,5 +46,16 @@ class SetStatistics:
             self.successful_sets = game_logic.successful_set_pile
             self.failed_sets = game_logic.failed_set_pile
             self.game_result = self.get_game_result()
-            self.penalty_states_entered = 0 # TODO: need to implement this still
+            # self.penalty_states_entered = 0 # TODO: need to implement this still
+
+    class ForeverStats:
+        def __init__(self, filename = 'settled_set_stats.json'):
+            self.filename = filename
+
+        def read_stats(self, filename = ''):
+            if filename == '':
+                filename = self.filename
+
+            stat_file = open(filename)
+            print(stat_file.read())
 
