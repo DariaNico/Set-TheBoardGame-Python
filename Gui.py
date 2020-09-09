@@ -73,8 +73,14 @@ class Gui:
                     
     def show_stats(self):
         stat_screen = Toplevel()
-        high_score_label = Label(stat_screen, text = "High score:")
-        high_score_label.pack(side = TOP)
+        stats = self.game_logic.set_statistics.all_game_stats
+        for stat in stats:
+            label = Label(stat_screen, text=f"{self.format_stat(stat)}: {len(stats[stat])}")
+            label.pack()
+            
+    def format_stat(self, stat):
+        stat = stat.replace('_', ' ')
+        return stat.title()
                     
     def show_win_screen(self):
         self.win_screen = Toplevel()
