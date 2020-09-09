@@ -14,7 +14,7 @@ http://magliery.com/Set/SetRules.html#:~:text=Players%20do%20not%20take%20turns,
 Visual indication of selected cards only works on Windows, sorry Mac users. Also, there are sound effects, but if your playsound for python isn't installed correctly, it will make the game unplayable, so it is commented out by default. To enable sound, uncomment all lines in Gui.py that are marked with: #TODO Uncomment this if you want sound
 
 Known bugs: 
-- If you have tooltips turned on and select Card A and then Card B, and then deselect Card B, Card A's tooltip will disappear.
+- If you have tooltips turned on and select Card A and then Card B, and then deselect Card A, Card B's tooltip will disappear.
 - If you win or lose the game, you can still select cards until you hit New Game, possibly causing odd visual effects or multiple win/lose screens to open.
 - Visual selection indication doesn't work on Mac because Mac. :(
 
