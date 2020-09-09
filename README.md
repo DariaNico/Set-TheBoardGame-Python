@@ -2,7 +2,21 @@
 Python Version: 3.7.3
 Pip Version: 20.2.2
 
-run `pip install -r requirements.txt` to install the necessary packages
+IMPORTANT: To play this game:
+Install Python (we developed this on 3.7.3)
+Install pip (19.0.3 or newer)
+run `pip install -r requirements.txt` in the terminal to install the necessary packages
+Run the Gui.py file (navigate to folder containing Gui.py and run `python .\Gui.py` in terminal) to start the game.
+
+Rules of the game are viewable at:
+http://magliery.com/Set/SetRules.html#:~:text=Players%20do%20not%20take%20turns,the%20player%20loses%20one%20point.
+
+Visual indication of selected cards only works on Windows, sorry Mac users. Also, there are sound effects, but if your playsound for python isn't installed correctly, it will make the game unplayable, so it is commented out by default. To enable sound, uncomment all lines in Gui.py that are marked with: #TODO Uncomment this if you want sound
+
+Known bugs: 
+- If you have tooltips turned on and select Card A and then Card B, and then deselect Card B, Card A's tooltip will disappear.
+- If you win or lose the game, you can still select cards until you hit New Game, possibly causing odd visual effects or multiple win/lose screens to open.
+- Visual selection indication doesn't work on Mac because Mac. :(
 
 # SetAssignment
 Things we will need to do:
