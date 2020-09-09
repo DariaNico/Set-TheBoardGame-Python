@@ -122,6 +122,7 @@ class Gui:
         
     def new_game(self):
         #playsound('Sounds/MenuSelect.wav') #TODO Uncomment this if you want sound
+        self.tooltip.wipe_all()
         if self.win_screen:
             self.win_screen.destroy()
         if self.lose_screen:

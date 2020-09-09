@@ -24,5 +24,5 @@ class ToolTip:
     
     def wipe_all(self):
         if self.windows:
-            for i in range(0, len(self.windows)-1):
-                self.hide_tooltip(i)
+            for i in range(0, len(self.windows)):
+                self.hide_tooltip(0)
