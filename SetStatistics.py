@@ -29,6 +29,8 @@ class SetStatistics:
 
         # TODO: Remove this print line
         print(f'STORED: game_id: {game_logic.game_count},\n wins: {self.win_count()},\n losses: {self.lose_count()},\n resets: {self.reset_count()}')
+        self.ForeverStats().write_stats()
+        self.ForeverStats().get_stats()
 
     class GameStat:
         def get_game_result(self):
@@ -51,11 +53,19 @@ class SetStatistics:
     class ForeverStats:
         def __init__(self, filename = 'settled_set_stats.json'):
             self.filename = filename
+            self.raw_stats = ''
 
-        def read_stats(self, filename = ''):
-            if filename == '':
-                filename = self.filename
+        def read_stats(self):
+            stat_file = open(self.filename)
 
-            stat_file = open(filename)
-            print(stat_file.read())
+            self.raw_stats = stat_file.read()
+            stat_file.close()
 
+        def write_stats(self, set_statistics_json = '\nmoar: stuff,'):
+            stat_file = open(self.filename, 'a')
+            stat_file.write(set_statistics_json)
+            stat_file.close()
+
+        def get_stats(self):
+            self.read_stats()
+            print(self.raw_stats)
