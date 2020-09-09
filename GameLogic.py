@@ -78,11 +78,9 @@ class GameLogic:
     def apply_game_status(self):
         game_status = self.game_status
         if game_status == 'win':
-                print('WINNER: You get a chicken dinner!'),
-                self.new_game()
+                print('WINNER: You get a chicken dinner!')
         elif game_status == 'lose':
-                print('LOSER: major failure!'),
-                self.new_game()
+                print('LOSER: major failure!')
         else:
             print('CONTINUE')
 
