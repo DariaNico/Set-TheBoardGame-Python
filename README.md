@@ -3,10 +3,16 @@ Python Version: 3.7.3
 Pip Version: 20.2.2
 
 IMPORTANT: To play this game:
+- Download this game code onto your computer and open a terminal inside the `Intro-to-Game-Dev-Set-in-Python` folder
+- Optional: Install pyenv
+  - [A pyenv installation guide](https://realpython.com/intro-to-pyenv/)
 - Install Python (we developed this on 3.7.3)
+  - If you installed pyenv use that to install python 3.7.3 with `pyenv install 3.7.3`
+  - Otherwise, [here's a python installation guide](https://docs.python-guide.org/starting/installation/)
 - Install pip (19.0.3 or newer)
+  - The guide to install pip should be included in that python guide above.
 - run `pip install -r requirements.txt` in the terminal to install the necessary packages
-- Run the Gui.py file (navigate to folder containing Gui.py and run `python .\Gui.py` in terminal) to start the game.
+- Run the Gui.py file (navigate into the folder containing Gui.py and run `python .\Gui.py` in terminal) to start the game.
 
 Rules of the game are viewable at:
 http://magliery.com/Set/SetRules.html#:~:text=Players%20do%20not%20take%20turns,the%20player%20loses%20one%20point.
