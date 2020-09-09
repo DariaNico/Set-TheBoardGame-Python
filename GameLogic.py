@@ -1,11 +1,15 @@
+from typing import Set
 import ComparisonLogic
 import Deck
+import SetStatistics
 
 ComparisonLogic = ComparisonLogic.ComparisonLogic
 Deck = Deck.Deck
+SetStatistics = SetStatistics.SetStatistics
 
 class GameLogic:
     def __init__(self):
+        self.set_statistics = SetStatistics()
         self.play_deck = Deck()
 
         self.cards_in_play = []
@@ -85,7 +89,9 @@ class GameLogic:
             print('CONTINUE')
 
     # TODO: remove win_test behavior!
-    def new_game(self, draw_number = 12, win_test = False):
+    def new_game(self, draw_number = 12, win_test = True):
+        self.set_statistics.store_game(self)
+
         self.failed_set_pile.clear()
         self.successful_set_pile.clear()
         self.selected.clear()
