@@ -1,11 +1,15 @@
+from typing import Set
 import ComparisonLogic
 import Deck
+import SetStatistics
 
 ComparisonLogic = ComparisonLogic.ComparisonLogic
 Deck = Deck.Deck
+SetStatistics = SetStatistics.SetStatistics
 
 class GameLogic:
     def __init__(self):
+        self.set_statistics = SetStatistics()
         self.play_deck = Deck()
 
         self.cards_in_play = []
