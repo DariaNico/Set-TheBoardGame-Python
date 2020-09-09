@@ -8,9 +8,24 @@ class SetStatistics:
             'reset': []
         }
 
+    def win_count(self):
+        return len(self.all_game_stats['win'])
+
+    def lose_count(self):
+        return len(self.all_game_stats['lose'])
+
+    def reset_count(self):
+        return len(self.all_game_stats['reset'])
+
+    def total_game_count(self):
+        return self.win_count() + self.lose_count() + self.reset_count()
+
     def store_game(self, game_logic):
         game_stat = self.GameStat(game_logic)
         self.all_game_stats[game_stat.game_result].append(game_stat)
+
+        # TODO: Remove this print line
+        print(f'STORED: game_id: {game_logic.game_count},\n wins: {self.win_count()},\n losses: {self.lose_count()},\n resets: {self.reset_count()}')
 
     class GameStat:
         def get_game_result(self):
