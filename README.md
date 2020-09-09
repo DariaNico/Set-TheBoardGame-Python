@@ -1,3 +1,5 @@
+Author Info: [Daria Tan](https://github.com/DariaNico) and [Will Goldberg](https://github.com/Hinute)
+
 # Requirements to Run This Game
 Python Version: 3.7.3
 Pip Version: 20.2.2
