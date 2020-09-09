@@ -4,7 +4,6 @@ import ScoreBoard
 #from playsound import playsound #TODO Uncomment this if you want sound
 import ToolTip
 import ToolTipButton
-from functools import partial
 
 GameLogic = GameLogic.GameLogic
 ScoreBoard = ScoreBoard.ScoreBoard
@@ -27,6 +26,8 @@ class Gui:
         self.ttb = ToolTipButton(self.root)
         self.tooltip = ToolTip()
         self.game_logic = GameLogic()
+        self.win_screen = None
+        self.lose_screen = None
 
     def set_cards_and_columns(self, cards):
         self.cards = cards
@@ -61,7 +62,24 @@ class Gui:
             
         if len(self.game_logic.selected) == 3:
                 self.game_logic.check_selected_cards()
-                self.next_board()
+                if self.game_logic.game_status is 'win':
+                    self.show_win_screen()
+                elif self.game_logic.game_status is 'lose':
+                    self.show_lose_screen()
+                else:
+                    self.next_board()
+                    
+    def show_win_screen(self):
+        self.win_screen = Toplevel()
+        win_label = Label(self.win_screen, text="Chicken Dinner!")
+        win_label.pack()
+        #self.win_screen.mainloop()
+        
+    def show_lose_screen(self):
+        self.lose_screen = Toplevel()
+        lose_label = Label(self.lose_screen, text="Sorry, try again!")
+        lose_label.pack()
+        #self.lose_screen.mainloop()
         
     def create_buttons(self):
         window = self.game_frame
@@ -97,6 +115,10 @@ class Gui:
         
     def new_game(self):
         #playsound('Sounds/MenuSelect.wav') #TODO Uncomment this if you want sound
+        if self.win_screen:
+            self.win_screen.destroy()
+        if self.lose_screen:
+            self.lose_screen.destroy()
         self.wipe_board()
         self.start_game()
         
