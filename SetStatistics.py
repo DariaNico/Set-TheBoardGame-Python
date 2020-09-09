@@ -22,7 +22,10 @@ class SetStatistics:
 
     def store_game(self, game_logic):
         game_stat = self.GameStat(game_logic)
-        self.all_game_stats[game_stat.game_result].append(game_stat)
+        game_result = game_stat.game_result
+
+        if game_result:
+            self.all_game_stats[game_result].append(game_stat)
 
         # TODO: Remove this print line
         print(f'STORED: game_id: {game_logic.game_count},\n wins: {self.win_count()},\n losses: {self.lose_count()},\n resets: {self.reset_count()}')
@@ -32,6 +35,8 @@ class SetStatistics:
             game_status = self.game_logic_attrs['game_status']
             if game_status == 'win' or game_status == 'lose':
                 return game_status
+            elif game_status == 'new_game':
+                return None
             else:
                 return 'reset'
 
