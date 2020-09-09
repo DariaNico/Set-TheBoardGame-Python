@@ -44,6 +44,8 @@ class Gui:
         new_game_button.pack(side = RIGHT)
         quit_button = Button(self.control_frame, text = "Quit", command = lambda: self.root.destroy())
         quit_button.pack(side = LEFT)
+        stat_button = Button(self.control_frame, text = "View Stats", command = lambda: self.show_stats())
+        stat_button.pack(side = RIGHT)
         self.ttb = ToolTipButton(self.control_frame)
         self.ttb.button.pack(side=LEFT)
 
@@ -68,6 +70,11 @@ class Gui:
                     self.show_lose_screen()
                 else:
                     self.next_board()
+                    
+    def show_stats(self):
+        stat_screen = Toplevel()
+        high_score_label = Label(stat_screen, text = "High score:")
+        high_score_label.pack(side = TOP)
                     
     def show_win_screen(self):
         self.win_screen = Toplevel()
